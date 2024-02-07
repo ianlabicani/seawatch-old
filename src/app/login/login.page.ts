@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -8,13 +13,23 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, ReactiveFormsModule],
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
+  fb = inject(FormBuilder);
+  form: FormGroup;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
+    this.form = this.fb.group({
+      email: [],
+      password: [],
+    });
   }
 
+  onSubmit() {
+    console.log(this.form.value);
+  }
+  login() {
+    throw new Error('Method not implemented.');
+  }
 }
