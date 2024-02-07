@@ -18,6 +18,7 @@ import {
   initializeFirestore,
   provideFirestore,
 } from '@angular/fire/firestore';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 if (environment.production) {
   enableProdMode();
@@ -25,6 +26,10 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    {
+      provide: FIREBASE_OPTIONS,
+      useValue: environment.firebaseConfig,
+    },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes),
