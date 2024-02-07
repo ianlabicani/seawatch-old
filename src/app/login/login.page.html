@@ -5,6 +5,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-label>
+      <a routerLink="/sign-up">Sign up</a>
+    </ion-label>
+  </ion-item>
   <ion-card>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <ion-item>
