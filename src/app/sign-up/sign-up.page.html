@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>sign-up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-item>
+      <ion-label>
+        <a routerLink="/login">Login</a>
+      </ion-label>
+    </ion-item>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-input
+          label="Email"
+          labelPlacement="floating"
+          placeholder="Eneter your email"
+          formControlName="email"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          label="Password"
+          labelPlacement="floating"
+          placeholder="Eneter your password"
+          formControlName="password"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          label="Confirm Password"
+          labelPlacement="floating"
+          placeholder="Eneter your password"
+          formControlName="confirmPassword"
+          type="password"
+        ></ion-input>
+      </ion-item>
+      <ion-button type="submit">Sign Up</ion-button>
+    </form>
+  </ion-card>
+</ion-content>
