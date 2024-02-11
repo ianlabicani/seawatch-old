@@ -20,6 +20,9 @@ import {
 } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
+import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/compat/auth';
+import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore';
+
 if (environment.production) {
   enableProdMode();
 }
@@ -30,31 +33,37 @@ bootstrapApplication(AppComponent, {
       provide: FIREBASE_OPTIONS,
       useValue: environment.firebaseConfig,
     },
+    {
+      provide: USE_AUTH_EMULATOR,
+      useValue: environment.useEmulators
+        ? ['http://localhost:9099']
+        : undefined,
+    },
+    {
+      provide: USE_FIRESTORE_EMULATOR,
+      useValue: environment.useEmulators ? ['localhost', 8080] : undefined,
+    },
+
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes),
     importProvidersFrom(
-      provideFirebaseApp(() => initializeApp(environment.firebaseConfig))
-    ),
-    importProvidersFrom(
+      provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
       provideAuth(() => {
         const auth = getAuth();
         if (environment.useEmulators) {
-          connectAuthEmulator(auth, 'http://localhost:9099'),
-            {
-              disableWarnings: true,
-            };
+          connectAuthEmulator(auth, 'http://localhost:9099', {
+            disableWarnings: true,
+          });
         }
         return auth;
-      })
-    ),
-    importProvidersFrom(
+      }),
       provideFirestore(() => {
         let firestore: Firestore;
+        firestore = initializeFirestore(getApp(), {
+          experimentalAutoDetectLongPolling: true,
+        });
         if (environment.firebaseConfig) {
-          firestore = initializeFirestore(getApp(), {
-            experimentalAutoDetectLongPolling: true,
-          });
           connectFirestoreEmulator(firestore, 'localhost', 8080);
         } else {
           firestore = getFirestore();
