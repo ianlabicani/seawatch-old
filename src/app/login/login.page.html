@@ -1,34 +1,62 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>Seawatch</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-item>
-    <ion-label>
-      <a routerLink="/sign-up">Sign up</a>
-    </ion-label>
-  </ion-item>
-  <ion-card>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <ion-item>
-        <ion-input
-          label="Email"
-          labelPlacement="floating"
-          placeholder="Eneter your email"
-          formControlName="email"
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input
-          label="Password"
-          labelPlacement="floating"
-          placeholder="Eneter your password"
-          formControlName="password"
-        ></ion-input>
-      </ion-item>
-      <ion-button type="submit">Log in</ion-button>
-    </form>
-  </ion-card>
+  <h2 class="ion-text-center">Sign In</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-input
+        label="Email"
+        labelPlacement="floating"
+        placeholder="Eneter your email"
+        formControlName="email"
+      ></ion-input>
+    </ion-item>
+    <div class="error-container">
+      <ng-container *ngFor="let validation of validationMessages.email">
+        <div
+          class="error-message ion-padding-start"
+          *ngIf="form.get('email')?.hasError(validation.type) && (form.get('email')?.dirty || form.get('email')?.touched)"
+        >
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span>{{ validation.message }}</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <ion-item>
+      <ion-input
+        label="Password"
+        labelPlacement="floating"
+        placeholder="Eneter your password"
+        formControlName="password"
+        type="password"
+      ></ion-input>
+    </ion-item>
+    <div class="error-container">
+      <ng-container *ngFor="let validation of validationMessages.password">
+        <div
+          class="error-message ion-padding-start"
+          *ngIf="form.get('password')?.hasError(validation.type) && (form.get('password')?.dirty || form.get('password')?.touched)"
+        >
+          <ion-icon name="information-circle-outline"></ion-icon>
+          <span>{{ validation.message }}</span>
+        </div>
+      </ng-container>
+    </div>
+
+    <a [routerLink]="['/sign-up']" class="sign-up-link"
+      >Don't have an account?</a
+    >
+    <ion-button type="submit" [disabled]="form.invalid">Login</ion-button>
+    <div class="error-container" *ngIf="submitError">
+      <div class="error-message">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <span>{{ submitError }}</span>
+      </div>
+    </div>
+  </form>
 </ion-content>
