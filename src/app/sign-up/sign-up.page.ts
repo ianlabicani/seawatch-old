@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -60,7 +61,7 @@ export class SignUpPage {
     addIcons({ informationCircleOutline });
   }
 
-  passwordMatchValidator(formGroup: FormGroup) {
+  passwordMatchValidator(formGroup: AbstractControl) {
     return formGroup.get('password')?.value ===
       formGroup.get('confirmPassword')?.value
       ? null
