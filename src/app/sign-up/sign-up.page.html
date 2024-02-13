@@ -62,7 +62,7 @@
       >
         <div
           class="error-message ion-padding-start"
-          *ngIf="(form.get('confirmPassword')?.hasError(validation.type))  && (form.get('confirmPassword')?.dirty || form.get('confirmPassword')?.touched)"
+          *ngIf="(form.get('confirmPassword')?.hasError(validation.type) || form?.hasError(validation.type))  && (form.get('confirmPassword')?.dirty || form.get('confirmPassword')?.touched)"
         >
           <ion-icon name="information-circle-outline"></ion-icon>
           <span>{{ validation.message }}</span>
