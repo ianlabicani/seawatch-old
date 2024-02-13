@@ -55,7 +55,6 @@ export class LoginPage {
   }
 
   onSubmit() {
-    // console.log(this.form.value);
     const email = this.form.get('email')?.value;
     const password = this.form.get('password')?.value;
     this.signIn(email, password);
